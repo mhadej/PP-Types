@@ -14,9 +14,17 @@ string[] names = {
 // After last element should be ".".
 void PrintGroups(string[] t, int perLine)
 {
-
-    // Write required code.
-
+    for (int i = 0; i < t.Length; i+=perLine)
+    {
+        try
+        {
+            Console.WriteLine(String.Join(", ", t[i..(i+perLine)])+(i==t.Length-perLine ? "." : ","));
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            Console.WriteLine(String.Join(", ", t[i..t.Length]) + ".");
+        }
+    }
 }
 
 
@@ -27,10 +35,40 @@ void PrintGroups(string[] t, int perLine)
 
 void PrintColumns(string[] t, int perLine, int width)
 {
-
-    // Write required code.
-
+    int counter = 1;
+    for (int i = 0; i < t.Length; i++)
+    {
+        if (t[i].Length >= width)
+        {
+            Console.Write(t[i][..width].PadRight(width) + (counter % perLine != 0 ? "| " : ""));
+        }
+        else
+        {
+            Console.Write(t[i].PadRight(width) + (counter % perLine != 0 ? "| " : ""));
+        }
+        
+        if(counter==perLine)
+        {
+            Console.WriteLine();
+            counter = 1;
+        }
+        else
+        {
+            counter++;
+        }
+    }
 }
+
+/*
+Mickey Mouse     | Minnie Mouse     | Donald Duck      | Goofy
+Pluto            | Daisy Duck       | Simba            | Nala
+Timon            | Pumbaa           | Mufasa           | Ariel
+Flounder         | Sebastian        | Ursula           | Belle
+Beast            | Gaston           | Cinderella       | Prince Charming
+Aurora           | Maleficent       | Rapunzel         | Flynn Rider
+Elsa             | Anna             | Olaf             | Moana
+Maui             | Hercules         |
+*/
 
 
 // Test how your functions work. 
@@ -106,7 +144,7 @@ Aurora         | Maleficent     | Rapunzel       | Flynn Rider    | Elsa
 Anna           | Olaf           | Moana          | Maui           | Hercules
 */
 
-Console.WriteLine("\n\nPrintColumns(names, 7, 10):\n");
+Console.WriteLine("\n\nPrintColumns(names, 8, 10):\n");
 PrintColumns(names, 8, 10);
 /*
 Mickey Mou| Minnie Mou| Donald Duc| Goofy     | Pluto     | Daisy Duck| Simba     | Nala
